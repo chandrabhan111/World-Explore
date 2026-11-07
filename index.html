@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Explorer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <h2 class="logo">World Explorer</h2>
+
+        <nav class="navbar">
+            <a href="#">Home</a>
+            <a href="#explore">Explore</a>
+            <a href="#">Favorites</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="explore">
+        <h1>Explore The World</h1>
+        <p>Discover countries, cultures and beautiful places.</p>
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search country..."
+            >
+            <button id="searchBtn">Search</button>
+        </div>
+
+        <select id="regionFilter">
+            <option value="all">All Regions</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="Africa">Africa</option>
+            <option value="Americas">Americas</option>
+            <option value="Oceania">Oceania</option>
+        </select>
+    </section>
+
+    <!-- Country Cards -->
+    <main>
+        <div id="countryContainer" class="country-container">
+            <p class="empty-message">Countries will appear here...</p>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
