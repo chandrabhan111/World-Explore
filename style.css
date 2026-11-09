@@ -199,3 +199,20 @@ body {
         width: 65%;
     }
 }
+.favorite-btn {
+    width: 90%;
+    margin: 10px auto 15px;
+    display: block;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #1e293b;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.favorite-btn:hover {
+    background: #334155;
+}

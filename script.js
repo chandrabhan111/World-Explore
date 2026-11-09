@@ -8,11 +8,17 @@ const searchInput = document.querySelector("#searchInput");
 const regionFilter = document.querySelector("#regionFilter");
 const searchButton = document.querySelector(".search-box button");
 const sortFilter = document.querySelector("#sortFilter");
+const favoritesFilter = document.querySelector("#favoritesFilter");
 
 // 3. Store Countries Data
 let allCountries = [];
 
-// 4. Show Loading
+// 4. Get Saved Favorites from Local Storage
+let favoriteCountries = JSON.parse(
+    localStorage.getItem("favoriteCountries")
+) || [];
+
+// 5. Show Loading
 function showLoading() {
     container.innerHTML = `
         <div class="loading-card"></div>
@@ -24,7 +30,7 @@ function showLoading() {
     `;
 }
 
-// 5. Show Error
+// 6. Show Error
 function showError() {
     container.innerHTML = "";
 
@@ -41,7 +47,7 @@ function showError() {
     container.append(message, retryBtn);
 }
 
-// 6. Format Population
+// 7. Format Population
 function formatPopulation(num) {
     if (num >= 1000000000) {
         return (num / 1000000000).toFixed(2) + " B";
@@ -58,7 +64,7 @@ function formatPopulation(num) {
     return num.toString();
 }
 
-// 7. Render Country Cards
+// 8. Render Country Cards
 function renderCards(filteredCountries) {
     container.innerHTML = "";
 
@@ -75,6 +81,8 @@ function renderCards(filteredCountries) {
         const card = document.createElement("div");
         card.className = "country-card";
 
+        const isFavorite = favoriteCountries.includes(country.name);
+
         card.innerHTML = `
             <img
                 class="country-flag"
@@ -90,14 +98,23 @@ function renderCards(filteredCountries) {
             </div>
         `;
 
+        const favoriteBtn = document.createElement("button");
+
+        favoriteBtn.className = "favorite-btn";
+        favoriteBtn.textContent = isFavorite
+            ? "❤️ Remove Favorite"
+            : "🤍 Add Favorite";
+
+        favoriteBtn.dataset.name = country.name;
+
+        card.appendChild(favoriteBtn);
         container.appendChild(card);
     });
 }
 
-// 8. Sort Countries
+// 9. Sort Countries
 function sortCountries(countries) {
     const sortValue = sortFilter.value;
-
     const sortedCountries = [...countries];
 
     if (sortValue === "az") {
@@ -127,21 +144,27 @@ function sortCountries(countries) {
     return sortedCountries;
 }
 
-// 9. Filter Countries
+// 10. Filter Countries
 function filterCountries() {
     const searchText = searchInput.value.trim().toLowerCase();
     const selectedRegion = regionFilter.value;
+    const selectedFavorite = favoritesFilter.value;
 
     const result = allCountries.filter(function(country) {
+
         const matchesSearch =
             country.name.toLowerCase().includes(searchText) ||
-            (country.capital || "").toLowerCase().includes(searchText);
+            country.capital.toLowerCase().includes(searchText);
 
         const matchesRegion =
             selectedRegion === "all" ||
             country.region === selectedRegion;
 
-        return matchesSearch && matchesRegion;
+        const matchesFavorite =
+            selectedFavorite === "all" ||
+            favoriteCountries.includes(country.name);
+
+        return matchesSearch && matchesRegion && matchesFavorite;
     });
 
     const sortedResult = sortCountries(result);
@@ -149,7 +172,30 @@ function filterCountries() {
     renderCards(sortedResult);
 }
 
-// 10. Fetch Countries from API
+// 11. Toggle Favorite
+function toggleFavorite(countryName) {
+
+    if (favoriteCountries.includes(countryName)) {
+
+        favoriteCountries = favoriteCountries.filter(function(name) {
+            return name !== countryName;
+        });
+
+    } else {
+
+        favoriteCountries.push(countryName);
+
+    }
+
+    localStorage.setItem(
+        "favoriteCountries",
+        JSON.stringify(favoriteCountries)
+    );
+
+    filterCountries();
+}
+
+// 12. Fetch Countries from API
 async function fetchCountries() {
     showLoading();
 
@@ -185,7 +231,8 @@ async function fetchCountries() {
     }
 }
 
-// 11. Event Listeners
+// 13. Event Listeners
+
 searchButton.addEventListener("click", filterCountries);
 
 searchInput.addEventListener("keyup", function(event) {
@@ -198,5 +245,20 @@ regionFilter.addEventListener("change", filterCountries);
 
 sortFilter.addEventListener("change", filterCountries);
 
-// 12. Initialize Project
+favoritesFilter.addEventListener("change", filterCountries);
+
+// Favorite Button Click
+container.addEventListener("click", function(event) {
+
+    if (event.target.classList.contains("favorite-btn")) {
+
+        const countryName = event.target.dataset.name;
+
+        toggleFavorite(countryName);
+
+    }
+
+});
+
+// 14. Initialize Project
 fetchCountries();
