@@ -9,7 +9,13 @@ const regionFilter = document.querySelector("#regionFilter");
 const searchButton = document.querySelector(".search-box button");
 const sortFilter = document.querySelector("#sortFilter");
 const favoritesFilter = document.querySelector("#favoritesFilter");
+// Statistics Elements
 
+const totalCountries = document.querySelector("#totalCountries");
+
+const showingCountries = document.querySelector("#showingCountries");
+
+const favoriteCount = document.querySelector("#favoriteCount");
 // 3. Store Countries Data
 let allCountries = [];
 
@@ -67,6 +73,7 @@ function formatPopulation(num) {
 // 8. Render Country Cards
 function renderCards(filteredCountries) {
     container.innerHTML = "";
+    updateStatistics(filteredCountries);
 
     if (filteredCountries.length === 0) {
         container.innerHTML = `
@@ -193,6 +200,18 @@ function toggleFavorite(countryName) {
     );
 
     filterCountries();
+}
+function updateStatistics(filteredCountries) {
+
+    // Total countries count
+    totalCountries.textContent = allCountries.length;
+
+    // Currently showing countries count
+    showingCountries.textContent = filteredCountries.length;
+
+    // Favorite countries count
+    favoriteCount.textContent = favoriteCountries.length;
+
 }
 
 // 12. Fetch Countries from API
