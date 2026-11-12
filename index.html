@@ -1,86 +1,78 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Explorer</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Explorer</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header class="header">
+    <h2 class="logo">World Explorer</h2>
 
-    <!-- Header -->
-    <header class="header">
-        <h2 class="logo">World Explorer</h2>
+    <nav class="navbar">
+      <a href="#">Home</a>
+      <a href="#explore">Explore</a>
+      <a href="#countryContainer">Countries</a>
+    </nav>
+  </header>
 
-        <nav class="navbar">
-            <a href="#">Home</a>
-            <a href="#explore">Explore</a>
-            <a href="#">Favorites</a>
-        </nav>
-    </header>
+  <section class="hero" id="explore">
+    <h1>Explore The World</h1>
+    <p>Discover countries, cultures and beautiful places.</p>
 
-    <!-- Hero Section -->
-    <section class="hero" id="explore">
-        <h1>Explore The World</h1>
-        <p>Discover countries, cultures and beautiful places.</p>
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search country..."
+      >
+      <button id="searchBtn" type="button">Search</button>
+    </div>
 
-        <div class="search-box">
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search country..."
-            >
-            <button id="searchBtn">Search</button>
-        </div>
-        <select id="sortFilter">
-    <option value="default">Sort Countries</option>
-    <option value="az">Name: A - Z</option>
-    <option value="za">Name: Z - A</option>
-    <option value="populationHigh">Population: High to Low</option>
-    <option value="populationLow">Population: Low to High</option>
-</select>
+    <select id="sortFilter">
+      <option value="default">Sort Countries</option>
+      <option value="az">Name: A - Z</option>
+      <option value="za">Name: Z - A</option>
+      <option value="populationHigh">Population: High to Low</option>
+      <option value="populationLow">Population: Low to High</option>
+    </select>
 
-        <select id="regionFilter">
-            <option value="all">All Regions</option>
-            <option value="Asia">Asia</option>
-            <option value="Europe">Europe</option>
-            <option value="Africa">Africa</option>
-            <option value="Americas">Americas</option>
-            <option value="Oceania">Oceania</option>
-        </select>
-        <select id="favoritesFilter">
-    <option value="all">All Countries</option>
-    <option value="favorites">Favorite Countries</option>
-</select>
-    </section>
+    <select id="regionFilter">
+      <option value="all">All Regions</option>
+      <option value="Asia">Asia</option>
+      <option value="Europe">Europe</option>
+      <option value="Africa">Africa</option>
+      <option value="Americas">Americas</option>
+      <option value="Oceania">Oceania</option>
+    </select>
 
-    <!-- Country Cards -->
-    <main>
-        <!-- Country Statistics -->
-<div class="stats-container">
+    <select id="favoritesFilter">
+      <option value="all">All Countries</option>
+      <option value="favorites">Favorite Countries</option>
+    </select>
+  </section>
 
-    <p>
-        Total Countries:
-        <span id="totalCountries">0</span>
-    </p>
+  <main>
+    <div class="stats-container">
+      <p>Total Countries: <span id="totalCountries">0</span></p>
+      <p>Showing Countries: <span id="showingCountries">0</span></p>
+      <p>Favorite Countries: <span id="favoriteCount">0</span></p>
+    </div>
 
-    <p>
-        Showing Countries:
-        <span id="showingCountries">0</span>
-    </p>
+    <div id="countryContainer" class="country-container">
+      <p class="empty-message">Countries will appear here...</p>
+    </div>
+  </main>
 
-    <p>
-        Favorite Countries:
-        <span id="favoriteCount">0</span>
-    </p>
+  <!-- Modal ko countryContainer ke bahar aur sirf ek baar rakhein -->
+  <div id="countryModal" class="country-modal">
+    <div class="modal-content">
+      <button id="closeModal" class="close-btn" type="button">&times;</button>
+      <div id="modalDetails"></div>
+    </div>
+  </div>
 
-</div>
-        <div id="countryContainer" class="country-container">
-            <p class="empty-message">Countries will appear here...</p>
-        </div>
-    </main>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
